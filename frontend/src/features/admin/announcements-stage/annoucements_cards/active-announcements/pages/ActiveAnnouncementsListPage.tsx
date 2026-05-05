@@ -1,0 +1,61 @@
+import { FunctionComponent, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import AdminLayout from '../../../../components/AdminLayout';
+import ActiveAnnouncementsCardHeader from '../components/ActiveAnnouncementsCardHeader';
+import ActiveAnnouncementsSearchToolbar from '../components/ActiveAnnouncementsSearchToolbar';
+import AllAnnouncementsTableContent from '../../all-announcements/components/AllAnnouncementsTableContent';
+import {
+  ACTIVE_ANNOUNCEMENTS_LIST_COUNT,
+  activeAnnouncementsRows,
+  type ActiveAnnouncementsTypeFilter,
+} from '../data/activeAnnouncementsMockData';
+
+const ActiveAnnouncementsListPage: FunctionComponent = () => {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState('');
+  const [typeFilter, setTypeFilter] = useState<ActiveAnnouncementsTypeFilter>('all');
+
+  const filteredRows = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return activeAnnouncementsRows.filter((row) => {
+      const matchType = typeFilter === 'all' || row.type === typeFilter;
+      if (!q) return matchType;
+      const matchQuery =
+        row.title.toLowerCase().includes(q) ||
+        row.type.toLowerCase().includes(q) ||
+        row.targetAudience.toLowerCase().includes(q) ||
+        row.date.includes(q);
+      return matchType && matchQuery;
+    });
+  }, [query, typeFilter]);
+
+  const totalFormatted = ACTIVE_ANNOUNCEMENTS_LIST_COUNT.toLocaleString('en-US');
+
+  return (
+    <AdminLayout>
+      <div className="mx-auto max-w-[1600px] space-y-5 pb-6 font-inter">
+        <button
+          type="button"
+          onClick={() => navigate('/admin/announcements')}
+          className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-[rgba(0,0,0,0.1)] bg-white px-4 text-center text-sm font-medium text-[#0a0a0a] transition-colors hover:bg-[#fafafa]"
+        >
+          <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
+          <span className="leading-5 font-inter">Back to Announcement</span>
+        </button>
+        <div className="flex w-full flex-col rounded-[14px] border border-[rgba(0,0,0,0.1)] bg-white">
+          <ActiveAnnouncementsCardHeader totalFormatted={totalFormatted} />
+          <ActiveAnnouncementsSearchToolbar
+            query={query}
+            onQueryChange={setQuery}
+            typeFilter={typeFilter}
+            onTypeFilterChange={setTypeFilter}
+          />
+          <AllAnnouncementsTableContent rows={filteredRows} />
+        </div>
+      </div>
+    </AdminLayout>
+  );
+};
+
+export default ActiveAnnouncementsListPage;
