@@ -75,6 +75,20 @@ import ActiveInternshipOffersPage from '../../features/admin/pages/ActiveInterns
 import OngoingApplicationsPage from '../../features/admin/pages/OngoingApplicationsPage';
 import DocumentsPendingValidationPage from '../../features/admin/pages/DocumentsPendingValidationPage';
 import StudentsUnpaidSrfPage from '../../features/admin/pages/StudentsUnpaidSrfPage';
+import MainHistoryPage from '../../features/admin/main_history/pages/MainHistoryPage';
+import TotalActionsHistoryCardPage from '../../features/admin/main_history/History_card/TotalActions_card/pages/TotalActionsHistoryCardPage';
+import StudentsHistoryCardPage from '../../features/admin/main_history/History_card/Students_card/pages/StudentsHistoryCardPage';
+import AdminsHistoryCardPage from '../../features/admin/main_history/History_card/Admins_card/pages/AdminsHistoryCardPage';
+import EncadrantsHistoryCardPage from '../../features/admin/main_history/History_card/Encadrants_card/pages/EncadrantsHistoryCardPage';
+import InternshipOffersHistoryCardPage from '../../features/admin/main_history/History_card/InternshipOffers_card/pages/InternshipOffersHistoryCardPage';
+import ApplicationsHistoryCardPage from '../../features/admin/main_history/History_card/Applications_card/pages/ApplicationsHistoryCardPage';
+import AnnouncementsHistoryCardPage from '../../features/admin/main_history/History_card/Announcements_card/pages/AnnouncementsHistoryCardPage';
+import DocumentsHistoryCardPage from '../../features/admin/main_history/History_card/Documents_card/pages/DocumentsHistoryCardPage';
+import SrfHistoryCardPage from '../../features/admin/main_history/History_card/Srf_card/pages/SrfHistoryCardPage';
+import ChatHistoryCardPage from '../../features/admin/main_history/History_card/Chat_card/pages/ChatHistoryCardPage';
+import ReportsHistoryCardPage from '../../features/admin/main_history/History_card/Reports_card/pages/ReportsHistoryCardPage';
+import TasksHistoryCardPage from '../../features/admin/main_history/History_card/Tasks_card/pages/TasksHistoryCardPage';
+import MeetingsHistoryCardPage from '../../features/admin/main_history/History_card/Meetings_card/pages/MeetingsHistoryCardPage';
 
 // Student Pages
 import StudentDashboardPage from '../../features/student/pages/StudentDashboardPage';
@@ -240,6 +254,62 @@ export const router = createBrowserRouter([
       {
         path: '/admin/announcements/:id',
         element: <ViewAnnouncementPage />
+      },
+      {
+        path: '/admin/history',
+        element: <MainHistoryPage />
+      },
+      {
+        path: '/admin/history/total-actions',
+        element: <TotalActionsHistoryCardPage />
+      },
+      {
+        path: '/admin/history/students',
+        element: <StudentsHistoryCardPage />
+      },
+      {
+        path: '/admin/history/admins',
+        element: <AdminsHistoryCardPage />
+      },
+      {
+        path: '/admin/history/encadrants',
+        element: <EncadrantsHistoryCardPage />
+      },
+      {
+        path: '/admin/history/internship-offers',
+        element: <InternshipOffersHistoryCardPage />
+      },
+      {
+        path: '/admin/history/applications',
+        element: <ApplicationsHistoryCardPage />
+      },
+      {
+        path: '/admin/history/announcements',
+        element: <AnnouncementsHistoryCardPage />
+      },
+      {
+        path: '/admin/history/documents',
+        element: <DocumentsHistoryCardPage />
+      },
+      {
+        path: '/admin/history/srf',
+        element: <SrfHistoryCardPage />
+      },
+      {
+        path: '/admin/history/chat',
+        element: <ChatHistoryCardPage />
+      },
+      {
+        path: '/admin/history/reports',
+        element: <ReportsHistoryCardPage />
+      },
+      {
+        path: '/admin/history/tasks',
+        element: <TasksHistoryCardPage />
+      },
+      {
+        path: '/admin/history/meetings',
+        element: <MeetingsHistoryCardPage />
       },
       {
         path: '/admin/documents',
