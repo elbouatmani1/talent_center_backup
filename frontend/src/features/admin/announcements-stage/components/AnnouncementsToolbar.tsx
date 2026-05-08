@@ -7,15 +7,15 @@ interface AnnouncementsToolbarProps {
   onCreate: () => void;
 }
 
-/** Barre d’actions — dimensions Figma : search w-64 (256px), filter w-9, create ~198px, h-9. */
+/** Barre d’actions — empilée sur mobile/tablette, ligne à partir de lg. */
 const AnnouncementsToolbar: FunctionComponent<AnnouncementsToolbarProps> = ({
   query,
   onQueryChange,
   onCreate,
 }) => {
   return (
-    <div className="relative box-border flex h-9 w-full max-w-[506px] shrink-0 items-center justify-end gap-2 font-inter text-num-14 text-white">
-      <div className="relative h-9 w-64 min-w-[256px] shrink-0 text-left text-slategray-100">
+    <div className="relative box-border flex w-full min-w-0 shrink-0 flex-col gap-3 font-inter text-num-14 text-white lg:h-9 lg:max-w-[506px] lg:flex-row lg:items-center lg:justify-end lg:gap-2">
+      <div className="relative h-9 w-full min-w-0 shrink-0 text-left text-slategray-100 lg:w-64">
         <Search
           className="pointer-events-none absolute left-3 top-1/2 z-[1] h-4 w-4 -translate-y-1/2 text-slategray-100"
           strokeWidth={1.75}
@@ -30,22 +30,24 @@ const AnnouncementsToolbar: FunctionComponent<AnnouncementsToolbarProps> = ({
         />
       </div>
 
-      <button
-        type="button"
-        aria-label="Filter announcements"
-        className="box-border flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white px-[9px] py-0 text-[#0a0a0a] transition-colors hover:bg-whitesmoke"
-      >
-        <Filter className="relative h-4 w-4 text-slategray-100" strokeWidth={1.75} />
-      </button>
+      <div className="flex w-full flex-wrap items-stretch justify-stretch gap-2 lg:w-auto lg:flex-nowrap lg:items-center lg:justify-end">
+        <button
+          type="button"
+          aria-label="Filter announcements"
+          className="box-border flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white px-[9px] py-0 text-[#0a0a0a] transition-colors hover:bg-whitesmoke"
+        >
+          <Filter className="relative h-4 w-4 text-slategray-100" strokeWidth={1.75} />
+        </button>
 
-      <button
-        type="button"
-        onClick={onCreate}
-        className="flex h-9 min-w-[198px] shrink-0 cursor-pointer items-center justify-center gap-3 rounded-lg bg-[#030213] px-3 font-inter font-medium leading-5 text-white transition-opacity hover:opacity-90"
-      >
-        <Plus className="relative h-4 w-4 shrink-0" strokeWidth={2} aria-hidden />
-        <span className="relative whitespace-nowrap">Create Announcement</span>
-      </button>
+        <button
+          type="button"
+          onClick={onCreate}
+          className="flex h-9 min-h-9 w-full min-w-0 shrink-0 cursor-pointer items-center justify-center gap-3 rounded-lg bg-[#030213] px-3 font-inter font-medium leading-5 text-white transition-opacity hover:opacity-90 lg:w-auto lg:min-w-[198px]"
+        >
+          <Plus className="relative h-4 w-4 shrink-0" strokeWidth={2} aria-hidden />
+          <span className="relative whitespace-nowrap">Create Announcement</span>
+        </button>
+      </div>
     </div>
   );
 };

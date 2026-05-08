@@ -3,8 +3,8 @@ import SRFSummaryStatCard from '../../../SRF/components/SRFSummaryStatCard';
 import { encadrantReportsSummaryStats } from '../data/encadrantReportsMock';
 
 const EncadrantReportsStatGrid: FunctionComponent = () => (
-  <div className="relative w-full min-w-0 overflow-x-auto text-left font-inter text-num-14 text-slategray-100">
-    <div className="grid w-full min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 xl:gap-x-4 xl:gap-y-4 xl:content-start">
+  <div className="relative w-full min-w-0 text-left font-inter text-num-14 text-slategray-100">
+    <div className="grid w-full min-w-0 grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 xl:gap-x-4 xl:gap-y-4 xl:content-start">
       {encadrantReportsSummaryStats.map((stat) => (
         <SRFSummaryStatCard
           key={stat.label}

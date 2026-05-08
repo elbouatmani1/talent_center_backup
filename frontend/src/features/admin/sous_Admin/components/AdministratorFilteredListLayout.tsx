@@ -49,11 +49,11 @@ const AdministratorFilteredListLayout: FunctionComponent<AdministratorFilteredLi
 
   return (
     <AdminLayout>
-      <div className="mx-auto max-w-[1600px] space-y-5 pb-8 pt-0 font-inter">
+      <div className="mx-auto w-full min-w-0 max-w-[1600px] space-y-5 pb-8 pt-0 font-inter">
         <BackToAdminButton onClick={() => navigate('/admin/admins')} />
 
         <div className="box-border flex w-full min-w-0 flex-col gap-6 rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left text-base text-[#0a0a0a] shadow-sm">
-          <div className="flex flex-col gap-4 px-6 pb-0 pt-6">
+          <div className="flex flex-col gap-4 px-3 pb-0 pt-6 sm:px-5 md:px-6">
             <div>
               <h1 className="text-base font-semibold leading-5 text-[#0a0a0a]">
                 {titleBase} ({totalCount})

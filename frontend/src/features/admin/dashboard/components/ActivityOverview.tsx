@@ -37,7 +37,7 @@ const ActivityOverview: FunctionComponent = () => {
     <div
       role="presentation"
       onClick={handleCardClick}
-      className={`w-full max-w-full relative rounded-[14px] bg-white border border-solid border-[rgba(0,0,0,0.1)] box-border flex flex-col items-stretch gap-6 text-left text-base font-sans overflow-hidden h-full min-h-0 ${DASHBOARD_CARD_INTERACTIVE_CLASS}`}
+      className={`min-w-0 w-full max-w-full relative rounded-[14px] bg-white border border-solid border-[rgba(0,0,0,0.1)] box-border flex flex-col items-stretch gap-6 text-left text-base font-sans overflow-hidden h-full min-h-0 ${DASHBOARD_CARD_INTERACTIVE_CLASS}`}
     >
       {/* Figma CardHeader — h-[70px], px 24 → px-6, title leading-4, subtitle leading-6 slategray */}
       <div className="w-full shrink-0 min-h-[70px] box-border px-6 pt-[22px] pb-2 text-[#0a0a0a]">

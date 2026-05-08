@@ -2,6 +2,7 @@ import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { Check, Download, Eye, X } from 'lucide-react';
 import { DocumentRequestRow, DocumentRequestStatus } from '../types';
 import DocumentsRequestsToolbar from './DocumentsRequestsToolbar';
+import AdminMobileRowCard from '../../shared/AdminMobileRowCard';
 
 const statusClassName: Record<DocumentRequestStatus, string> = {
   Validated: 'bg-honeydew text-seagreen',
@@ -20,6 +21,8 @@ const approveBtn =
 
 const rejectBtn =
   'inline-flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-solid border-[#fecaca] bg-white px-2.5 font-inter text-num-14 font-medium leading-num-20 text-firebrick hover:bg-mistyrose';
+
+const btnMobile = (base: string) => `${base} w-full justify-center sm:w-auto`;
 
 interface DocumentsRequestsTableProps {
   rows: DocumentRequestRow[];
@@ -66,7 +69,7 @@ const DocumentsRequestsTable: FunctionComponent<DocumentsRequestsTableProps> = (
   }, [rows, documentTypeFilter]);
 
   return (
-    <div className="box-border flex w-full flex-col gap-6 rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left font-inter text-base text-gray shadow-sm">
+    <div className="box-border flex w-full min-w-0 flex-col gap-6 rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left font-inter text-base text-gray shadow-sm">
       {compactHeader ? (
         <div className="border-b border-[rgba(0,0,0,0.06)] px-4 py-5 sm:px-6">
           <DocumentsRequestsToolbar
@@ -99,7 +102,58 @@ const DocumentsRequestsTable: FunctionComponent<DocumentsRequestsTableProps> = (
         </div>
       )}
 
-      <div className="overflow-x-auto px-4 pb-6 pt-1 sm:px-6">
+      <div className="space-y-3 px-4 pb-6 pt-1 sm:px-6 lg:hidden">
+        {displayRows.map((row) => (
+          <AdminMobileRowCard
+            key={row.id}
+            title={row.documentType}
+            badges={
+              <span
+                className={`inline-flex min-h-[22px] items-center justify-center rounded-num-8 px-2 py-0.5 text-[12px] font-medium leading-4 ${statusClassName[row.status]}`}
+              >
+                {row.status}
+              </span>
+            }
+            fields={[
+              { label: 'Student', value: row.studentName },
+              ...(showClassColumn
+                ? [{ label: 'Class', value: row.studentClass ?? '—' } as const]
+                : []),
+              { label: 'Submitted', value: row.submissionDate }
+            ]}
+            actions={
+              <>
+                <button type="button" className={btnMobile(viewBtn)}>
+                  <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                  View
+                </button>
+
+                {row.status === 'Validated' && (
+                  <button type="button" className={btnMobile(downloadBtn)}>
+                    <Download className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                    Download
+                  </button>
+                )}
+
+                {row.status === 'Pending' && (
+                  <>
+                    <button type="button" className={btnMobile(approveBtn)}>
+                      <Check className="h-4 w-4 shrink-0" strokeWidth={2} aria-hidden />
+                      Approve
+                    </button>
+                    <button type="button" className={btnMobile(rejectBtn)}>
+                      <X className="h-4 w-4 shrink-0" strokeWidth={2} aria-hidden />
+                      Reject
+                    </button>
+                  </>
+                )}
+              </>
+            }
+          />
+        ))}
+      </div>
+
+      <div className="hidden overflow-x-auto px-4 pb-6 pt-1 sm:px-6 lg:block">
         <table
           className={`w-full border-collapse font-inter text-num-14 leading-num-20 text-gray ${showClassColumn ? 'min-w-[1000px]' : 'min-w-[900px]'}`}
         >

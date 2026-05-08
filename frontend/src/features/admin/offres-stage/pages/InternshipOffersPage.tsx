@@ -6,7 +6,7 @@ import InternshipOffersTable from '../components/InternshipOffersTable';
 const InternshipOffersPage: FunctionComponent = () => {
   return (
     <AdminLayout>
-      <div className="space-y-6">
+      <div className="mx-auto w-full min-w-0 max-w-[1600px] space-y-4 pb-4 sm:space-y-6 sm:pb-6">
         <InternshipOffersStats />
 
         {/* Table */}

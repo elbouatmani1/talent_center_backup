@@ -4,6 +4,7 @@ import type {
   StudentFinancialRowStatus,
   StudentFinancialTableRow,
 } from '../data/srfFinancialMock';
+import AdminMobileRowCard from '../../shared/AdminMobileRowCard';
 
 const statusBadgeClasses: Record<StudentFinancialRowStatus, string> = {
   Paid: 'bg-emerald-50 text-emerald-800',
@@ -18,6 +19,11 @@ const mad = (n: number) => `${n} MAD`;
 
 const viewDetailsBtnClass =
   'inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white px-2.5 py-2 font-inter text-sm font-medium leading-5 text-[#0a0a0a] transition-colors hover:bg-[#fafafa]';
+
+const validateBtnClass =
+  'inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-[#030213] px-3 py-2 font-inter text-sm font-medium leading-5 text-white transition-opacity hover:opacity-90';
+
+const btnMobile = (c: string) => `${c} w-full justify-center sm:w-auto`;
 
 const TABLE_HEADINGS = [
   'Student Name',
@@ -51,7 +57,7 @@ const StudentFinancialStatusTable: FunctionComponent<StudentFinancialStatusTable
   }, [rows, query]);
 
   return (
-    <div className="box-border flex w-full flex-col rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left font-inter shadow-sm">
+    <div className="box-border flex w-full min-w-0 flex-col rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left font-inter shadow-sm">
       <div className="flex flex-col gap-5 px-4 pb-1.5 pt-6 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
         <div className="flex min-w-0 flex-col gap-0">
           <h2 className="m-0 font-inter text-xl font-bold leading-7 tracking-tight text-[#0a0a0a]">
@@ -61,8 +67,8 @@ const StudentFinancialStatusTable: FunctionComponent<StudentFinancialStatusTable
             Track and manage student payment status
           </p>
         </div>
-        <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-end lg:max-w-xl">
-          <div className="relative flex flex-1 min-w-[12rem]">
+        <div className="flex w-full min-w-0 flex-col gap-3 lg:flex-row lg:items-center lg:justify-end lg:max-w-xl">
+          <div className="relative flex min-w-0 flex-1 lg:min-w-[12rem]">
             <Search
               className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#717182]"
               strokeWidth={1.75}
@@ -77,7 +83,7 @@ const StudentFinancialStatusTable: FunctionComponent<StudentFinancialStatusTable
           </div>
           <button
             type="button"
-            className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white text-[#171717] transition-colors hover:bg-[#fafafa]"
+            className="flex h-10 w-full shrink-0 cursor-pointer items-center justify-center rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white py-2 text-[#171717] transition-colors hover:bg-[#fafafa] lg:h-10 lg:w-10 lg:p-0"
             aria-label="Filter"
           >
             <Filter className="h-4 w-4" strokeWidth={1.75} />
@@ -85,7 +91,42 @@ const StudentFinancialStatusTable: FunctionComponent<StudentFinancialStatusTable
         </div>
       </div>
 
-      <div className="overflow-x-auto px-4 pb-6 pt-3 sm:px-6">
+      <div className="space-y-3 px-4 pb-6 pt-3 sm:px-6 lg:hidden">
+        {filteredRows.map((row) => (
+          <AdminMobileRowCard
+            key={row.id}
+            title={row.studentName}
+            badges={
+              <span
+                className={`inline-flex rounded-full px-2.5 py-1 font-inter text-xs font-semibold leading-4 ${statusBadgeClasses[row.status]}`}
+              >
+                {row.status}
+              </span>
+            }
+            fields={[
+              { label: 'Class', value: row.className },
+              { label: 'Amount due', value: <span className="tabular-nums">{mad(row.amountDue)}</span> },
+              { label: 'Amount paid', value: <span className="tabular-nums">{mad(row.amountPaid)}</span> }
+            ]}
+            actions={
+              <>
+                <button type="button" className={btnMobile(viewDetailsBtnClass)}>
+                  <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                  View Details
+                </button>
+                {row.status === 'Pending Validation' && (
+                  <button type="button" className={btnMobile(validateBtnClass)}>
+                    <CircleCheck className="h-4 w-4 shrink-0" strokeWidth={2} />
+                    Validate
+                  </button>
+                )}
+              </>
+            }
+          />
+        ))}
+      </div>
+
+      <div className="hidden min-w-0 overflow-x-auto px-4 pb-6 pt-3 sm:px-6 lg:block">
         <table className="w-full min-w-[760px] border-collapse font-inter">
           <thead>
             <tr className="border-b border-solid border-[rgba(0,0,0,0.08)]">

@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import type { SrfPaymentStatus, StudentUnpaidSrfRow } from '../data/studentsUnpaidSrfMockData';
+import AdminMobileRowCard from '../../../../shared/AdminMobileRowCard';
 
 interface StudentsUnpaidSrfCardContentProps {
   rows: StudentUnpaidSrfRow[];
@@ -12,8 +13,26 @@ const statusLabel = (status: SrfPaymentStatus): string => {
 
 const StudentsUnpaidSrfCardContent: FunctionComponent<StudentsUnpaidSrfCardContentProps> = ({ rows }) => {
   return (
-    <div className="w-full px-6 pb-6 font-inter text-left text-sm text-[#0a0a0a]">
-      <div className="overflow-x-auto">
+    <div className="w-full px-4 pb-6 font-inter text-left text-sm text-[#0a0a0a] sm:px-6">
+      <div className="space-y-3 lg:hidden">
+        {rows.map((row, index) => (
+          <AdminMobileRowCard
+            key={`${row.name}-${index}`}
+            title={row.name}
+            badges={
+              <span className="inline-flex items-center justify-center rounded-full bg-rose-100 px-2.5 py-1 text-xs font-medium leading-4 text-rose-800">
+                {statusLabel(row.status)}
+              </span>
+            }
+            fields={[
+              { label: 'Class', value: row.classLevel },
+              { label: 'Amount due', value: <span className="tabular-nums">{row.amountDue}</span> }
+            ]}
+          />
+        ))}
+      </div>
+
+      <div className="hidden overflow-x-auto lg:block">
         <table className="w-full min-w-[560px] border-collapse">
           <thead>
             <tr className="border-b border-[rgba(0,0,0,0.1)]">

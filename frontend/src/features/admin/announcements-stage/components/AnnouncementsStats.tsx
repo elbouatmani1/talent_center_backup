@@ -8,7 +8,7 @@ interface AnnouncementsStatsProps {
 
 const AnnouncementsStats: FunctionComponent<AnnouncementsStatsProps> = ({ onStatCardClick }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
       {announcementsStats.map((stat) => (
         <AnnouncementStatCard
           key={stat.label}

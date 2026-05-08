@@ -4,7 +4,7 @@ import { unpaidStudentsKpis } from '../data/unpaidStudentsDetailMock';
 const cardBorder = 'border border-solid border-[#e5e7eb]';
 
 const UnpaidStudentsKpiCards: FunctionComponent = () => (
-  <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+  <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-4">
     {unpaidStudentsKpis.map(({ label, valueDisplay, Icon }) => (
       <div
         key={label}

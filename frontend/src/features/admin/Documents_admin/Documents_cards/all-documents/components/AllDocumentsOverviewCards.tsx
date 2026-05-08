@@ -11,7 +11,7 @@ const overviewStats: { label: string; value: string; icon: LucideIcon }[] = [
 /** Cartes résumé pour la vue « Total documents » — toutes les icônes en bleu comme sur la maquette. */
 const AllDocumentsOverviewCards: FunctionComponent = () => {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
       {overviewStats.map(({ label, value, icon: Icon }) => (
         <div
           key={label}

@@ -68,7 +68,7 @@ const OfferSummaryCard: FunctionComponent<{ detail: InternshipOfferDetail }> = (
       </div>
 
       <div className="flex flex-col gap-6 px-6 pb-6 pt-0 text-[18px] text-[#0a0a0a]">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           <div className="flex min-h-12 flex-col gap-1 text-[14px] text-slategray-100">
             <span className="leading-5">Posted On</span>
             <span className="text-[16px] font-medium leading-6 text-[#0a0a0a]">{detail.postedOn}</span>

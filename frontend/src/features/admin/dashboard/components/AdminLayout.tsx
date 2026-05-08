@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode, useCallback, useState } from 'react';
 import AdminSidebar from './AdminSidebar';
 import AdminHeader from './AdminHeader';
 
@@ -9,13 +9,16 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, mainFillHeight }) => {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const closeMobileNav = useCallback(() => setMobileNavOpen(false), []);
+
   return (
     <div className="flex h-screen overflow-hidden bg-[#fafafa]">
-      <AdminSidebar />
-      <div className="flex flex-col flex-1 min-w-0 bg-[#fafafa]">
-        <AdminHeader />
+      <AdminSidebar mobileOpen={mobileNavOpen} onMobileClose={closeMobileNav} />
+      <div className="flex min-w-0 flex-1 flex-col bg-[#fafafa]">
+        <AdminHeader onMenuClick={() => setMobileNavOpen(true)} />
         <main
-          className={`flex-1 min-h-0 overflow-x-hidden p-5 md:p-6 ${mainFillHeight ? 'flex min-h-0 flex-col overflow-y-hidden' : 'overflow-y-auto'}`}
+          className={`min-h-0 min-w-0 flex-1 overflow-x-hidden p-3 sm:p-5 md:p-6 ${mainFillHeight ? 'flex min-h-0 flex-col overflow-y-hidden' : 'overflow-y-auto'}`}
         >
           {children}
         </main>

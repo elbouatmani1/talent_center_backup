@@ -8,8 +8,8 @@ const PlatformAdministratorsKpiSection: FunctionComponent = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative w-full min-w-0 overflow-x-auto text-left font-inter text-num-14 text-slategray-100">
-      <div className="grid w-full min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-4 xl:gap-y-4">
+    <div className="relative w-full min-w-0 text-left font-inter text-num-14 text-slategray-100">
+      <div className="grid w-full min-w-0 grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-4 xl:gap-y-4">
         {platformAdministratorsKpiStats.map((stat) => (
           <StudentDashboardStatCard
             key={stat.label}

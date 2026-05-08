@@ -10,7 +10,7 @@ const ExemptedStudentsDetailPage: FunctionComponent = () => {
 
   return (
     <AdminLayout>
-      <div className="mx-auto max-w-[1600px] space-y-4 font-inter">
+      <div className="mx-auto w-full min-w-0 max-w-[1600px] space-y-4 font-inter">
         <button
           type="button"
           onClick={() => navigate('/admin/srf')}

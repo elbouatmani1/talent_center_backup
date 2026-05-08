@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { Calendar, Eye, Pencil, Trash2, User } from 'lucide-react';
 import { AnnouncementRow, AnnouncementType } from '../types';
 import AnnouncementsToolbar from './AnnouncementsToolbar';
+import AdminMobileRowCard from '../../shared/AdminMobileRowCard';
 
 /** Pastilles Figma : Event lavender-200 + slateblue, Interview lavender-100 + darkorchid, Info honeydew + seagreen */
 const typeClassName: Record<AnnouncementType, string> = {
@@ -12,6 +13,9 @@ const typeClassName: Record<AnnouncementType, string> = {
 
 const outlineBtn =
   'relative box-border flex h-8 shrink-0 cursor-pointer items-center justify-center gap-0 rounded-num-8 border border-solid border-[rgba(0,0,0,0.1)] bg-white px-0 font-inter text-num-14 font-medium leading-num-20 text-[#0a0a0a] transition-colors hover:bg-whitesmoke';
+
+const mobileActionBtn =
+  'inline-flex h-9 w-full items-center justify-center gap-2 rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white px-3 font-inter text-sm font-medium text-[#0a0a0a] transition-colors hover:bg-whitesmoke sm:w-auto';
 
 interface AnnouncementsTableProps {
   rows: AnnouncementRow[];
@@ -33,10 +37,9 @@ const AnnouncementsTable: FunctionComponent<AnnouncementsTableProps> = ({
   onDelete,
 }) => {
   return (
-    <div className="box-border flex w-full flex-col items-start gap-6 rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left font-inter text-num-14 leading-num-20 text-[#0a0a0a]">
-      {/* En-tête carte — Figma : h-[70px] pt-6 px-6 pb-1.5 gap-5 */}
-      <div className="box-border flex min-h-[70px] w-full flex-col gap-5 px-6 pb-1.5 pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex h-10 max-w-[362px] flex-col items-start justify-center">
+    <div className="box-border flex w-full min-w-0 flex-col items-start gap-6 rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left font-inter text-num-14 leading-num-20 text-[#0a0a0a]">
+      <div className="box-border flex min-h-[70px] w-full min-w-0 flex-col gap-5 px-4 pb-1.5 pt-6 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-h-10 max-w-[362px] flex-col items-start justify-center">
           <div className="relative self-stretch leading-4">
             <h2 className="m-0 shrink-0 font-medium leading-4 text-[#0a0a0a]">Announcements</h2>
           </div>
@@ -53,9 +56,60 @@ const AnnouncementsTable: FunctionComponent<AnnouncementsTableProps> = ({
         />
       </div>
 
-      {/* Corps tableau — Figma : px-6 */}
-      <div className="box-border w-full shrink-0 px-6 pb-6 pt-0">
-        <div className="w-full overflow-x-auto">
+      <div className="box-border w-full min-w-0 shrink-0 px-4 pb-6 pt-0 sm:px-6">
+        <div className="space-y-3 lg:hidden">
+          {rows.map((row) => (
+            <AdminMobileRowCard
+              key={row.id}
+              title={row.title}
+              badges={
+                <span
+                  className={`inline-flex h-[22px] min-w-0 items-center justify-center rounded-num-8 px-2 py-0.5 text-center text-[12px] font-medium leading-4 ${typeClassName[row.type]}`}
+                >
+                  {row.type}
+                </span>
+              }
+              fields={[
+                {
+                  label: 'Audience',
+                  value: (
+                    <span className="inline-flex items-center gap-1.5">
+                      <User className="h-4 w-4 shrink-0 text-slategray-100" strokeWidth={1.75} aria-hidden />
+                      {row.targetAudience}
+                    </span>
+                  )
+                },
+                {
+                  label: 'Date',
+                  value: (
+                    <span className="inline-flex items-center gap-1.5">
+                      <Calendar className="h-4 w-4 shrink-0 text-slategray-100" strokeWidth={1.75} aria-hidden />
+                      {row.date}
+                    </span>
+                  )
+                }
+              ]}
+              actions={
+                <>
+                  <button type="button" className={mobileActionBtn} onClick={() => onView(row)}>
+                    <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                    View
+                  </button>
+                  <button type="button" className={mobileActionBtn} onClick={() => onEdit(row)}>
+                    <Pencil className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                    Edit
+                  </button>
+                  <button type="button" className={mobileActionBtn} onClick={() => onDelete(row)}>
+                    <Trash2 className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                    Delete
+                  </button>
+                </>
+              }
+            />
+          ))}
+        </div>
+
+        <div className="hidden w-full min-w-0 overflow-x-auto lg:block">
           <table className="w-full min-w-[880px] table-fixed border-collapse font-inter text-num-14 leading-num-20 text-[#0a0a0a]">
             <colgroup>
               <col className="w-[38%]" />

@@ -47,7 +47,7 @@ const CreateAdministratorForm: FunctionComponent<CreateAdministratorFormProps> =
         <p className="mt-2 text-base leading-6 text-slategray-100">Add a new admin user with specific permissions</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 sm:gap-x-8 sm:gap-y-6">
         <label className="flex flex-col gap-1.5">
           <span className="text-sm font-semibold text-[#0a0a0a]">
             Full Name <span className="text-red-600">*</span>
@@ -106,7 +106,7 @@ const CreateAdministratorForm: FunctionComponent<CreateAdministratorFormProps> =
           <Hexagon className="h-5 w-5 shrink-0 text-[#0a0a0a]" strokeWidth={1.75} aria-hidden />
           <h2 className="text-base font-semibold text-[#0a0a0a]">Permissions</h2>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-x-12 sm:gap-y-4">
           <div className="flex flex-col gap-3">
             {CREATE_ADMIN_PERMISSION_LABELS_COL_A.map((label) => (
               <label key={label} className="flex cursor-pointer items-start gap-3">
@@ -148,7 +148,7 @@ const CreateAdministratorForm: FunctionComponent<CreateAdministratorFormProps> =
       </label>
     </div>
 
-    <div className="grid shrink-0 grid-cols-2 gap-4 border-t border-[rgba(0,0,0,0.08)] bg-white px-6 py-6 sm:px-10 lg:px-12">
+    <div className="grid min-w-0 shrink-0 grid-cols-1 gap-4 border-t border-[rgba(0,0,0,0.08)] bg-white px-4 py-6 sm:px-10 md:grid-cols-2 lg:px-12">
       <button
         type="button"
         onClick={onCancel}

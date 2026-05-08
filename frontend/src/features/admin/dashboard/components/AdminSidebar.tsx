@@ -119,6 +119,7 @@ const isAdminDashboardCardDetailPath = (pathname: string): boolean => {
 const getActiveSectionFromPath = (pathname: string): string => {
   if (pathname === '/admin-dashboard') return 'Dashboard';
   if (isAdminDashboardCardDetailPath(pathname)) return 'Dashboard';
+  if (pathname === '/admin/history' || pathname.startsWith('/admin/history/')) return 'History';
   if (pathname === '/admin/internship-offers' || pathname.startsWith('/admin/internship-offers/')) {
     return 'Internship Offers';
   }
@@ -177,7 +178,12 @@ const getChildPath = (section: string, child: string): string | undefined => {
   return undefined;
 };
 
-const AdminSidebar: FunctionComponent = () => {
+interface AdminSidebarProps {
+  mobileOpen: boolean;
+  onMobileClose: () => void;
+}
+
+const AdminSidebar: FunctionComponent<AdminSidebarProps> = ({ mobileOpen, onMobileClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
@@ -203,6 +209,19 @@ const AdminSidebar: FunctionComponent = () => {
     }
   }, [routeExpandedSection]);
 
+  useEffect(() => {
+    onMobileClose();
+  }, [pathname, onMobileClose]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   const isSectionExpanded = (label: string) => {
     const keptOpenByRoute =
       routeExpandedSection === label && !manuallyCollapsed.includes(label);
@@ -223,8 +242,21 @@ const AdminSidebar: FunctionComponent = () => {
   };
 
   return (
-    <aside className="w-[260px] h-screen bg-[#f5f5f5] flex flex-col flex-none overflow-hidden border-r border-solid border-neutral-200/80">
-      <div className="flex h-[72px] flex-none items-center gap-3 border-b border-solid border-neutral-200 box-border px-4">
+    <>
+      <button
+        type="button"
+        aria-label="Close navigation menu"
+        onClick={onMobileClose}
+        className={`fixed inset-0 z-40 bg-[rgba(15,23,42,0.4)] transition-opacity lg:hidden ${
+          mobileOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+      />
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-[260px] flex-none flex-col overflow-hidden border-r border-solid border-neutral-200/80 bg-[#f5f5f5] transition-transform duration-200 ease-out lg:relative lg:z-auto lg:translate-x-0 ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="box-border flex h-14 flex-none items-center gap-3 border-b border-solid border-neutral-200 px-4 sm:h-[72px]">
         <div className="w-9 h-9 bg-[#2b7fff] rounded-lg flex items-center justify-center shrink-0 shadow-sm">
           <img src={Icon} alt="Digital Talent Center" className="w-5 h-5" />
         </div>
@@ -265,6 +297,8 @@ const AdminSidebar: FunctionComponent = () => {
                     navigate('/admin/admins');
                   } else if (item.label === 'Dashboard') {
                     navigate('/admin-dashboard');
+                  } else if (item.label === 'History') {
+                    navigate('/admin/history');
                   } else if (!item.expandable) {
                     setPrimaryNavOverride(item.label);
                   }
@@ -297,8 +331,9 @@ const AdminSidebar: FunctionComponent = () => {
         })}
       </nav>
 
-      <div className="flex-none h-3 shrink-0" />
-    </aside>
+        <div className="h-3 shrink-0 flex-none" />
+      </aside>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, Edit, Users } from 'lucide-react';
 import type { ClosedOfferListRow } from '../data/closedOffersOnlyMockData';
+import AdminMobileRowCard from '../../../../shared/AdminMobileRowCard';
 
 interface ClosedOffersListTableContentProps {
   offers: ClosedOfferListRow[];
@@ -10,14 +11,63 @@ interface ClosedOffersListTableContentProps {
 const actionBtn =
   'inline-flex h-8 items-center justify-center gap-1.5 rounded-num-8 border border-solid border-[rgba(0,0,0,0.1)] bg-white px-2.5 font-inter text-num-14 font-medium leading-num-20 text-[#101828] hover:bg-[#fafafa]';
 
+const actionBtnMobile = `${actionBtn} w-full sm:w-auto`;
+
 const ClosedOffersListTableContent: FunctionComponent<ClosedOffersListTableContentProps> = ({
   offers,
 }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full px-6 pb-6 pt-4 font-inter text-left text-num-14 leading-num-20 text-[#101828]">
-      <div className="overflow-x-auto">
+    <div className="w-full px-4 pb-6 pt-4 font-inter text-left text-num-14 leading-num-20 text-[#101828] sm:px-6">
+      <div className="space-y-3 lg:hidden">
+        {offers.length === 0 ? (
+          <p className="py-8 text-center text-sm text-slategray-100">No offers match your filters.</p>
+        ) : (
+          offers.map((offer) => (
+            <AdminMobileRowCard
+              key={offer.id}
+              title={offer.title}
+              badges={
+                <span className="inline-flex rounded-lg bg-[#f1f5f9] px-2 py-0.5 text-xs font-medium leading-4 text-[#475569]">
+                  {offer.status}
+                </span>
+              }
+              fields={[
+                { label: 'Company', value: offer.company },
+                {
+                  label: 'Applicants',
+                  value: (
+                    <span className="inline-flex items-center gap-1.5">
+                      <Users className="h-4 w-4 shrink-0 text-slategray-100" strokeWidth={1.75} aria-hidden />
+                      {offer.applicants}
+                    </span>
+                  )
+                },
+                { label: 'Deadline', value: offer.deadline }
+              ]}
+              actions={
+                <>
+                  <button
+                    type="button"
+                    className={actionBtnMobile}
+                    onClick={() => navigate(`/admin/internship-offers/${offer.id}`)}
+                  >
+                    <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                    <span>View</span>
+                  </button>
+                  <button type="button" className={actionBtnMobile} onClick={() => console.log('Edit offer:', offer.id)}>
+                    <Edit className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                    <span>Edit</span>
+                  </button>
+                </>
+              }
+            />
+          ))
+        )}
+      </div>
+
+      <div className="hidden overflow-x-auto lg:block">
         <table className="w-full min-w-[800px] border-collapse">
           <thead>
             <tr className="border-b border-[rgba(0,0,0,0.1)]">

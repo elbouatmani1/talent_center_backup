@@ -2,6 +2,7 @@ import { FunctionComponent, useMemo, useState } from 'react';
 import { Search, Eye, ChevronDown } from 'lucide-react';
 import type { UnpaidStudentDetailRow } from '../data/unpaidStudentsDetailMock';
 import { unpaidStudentsDetailRows } from '../data/unpaidStudentsDetailMock';
+import AdminMobileRowCard from '../../../../shared/AdminMobileRowCard';
 
 const mad = (n: number) => `${n} MAD`;
 
@@ -10,9 +11,10 @@ const borderRow = 'border-b border-solid border-[rgba(0,0,0,0.1)]';
 const viewDetailsBtn =
   'inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white px-3 font-inter text-sm font-medium leading-5 text-[#0a0a0a] transition-colors hover:bg-[#fafafa]';
 
-/** Restant : gras rouge comme sur la maquette */
 const remainingClass =
   'h-[49px] px-2 align-middle text-sm font-bold leading-5 tabular-nums text-firebrick md:px-4';
+
+const btnMobile = (c: string) => `${c} w-full justify-center sm:w-auto`;
 
 const UnpaidStudentsDetailTable: FunctionComponent = () => {
   const [query, setQuery] = useState('');
@@ -45,11 +47,17 @@ const UnpaidStudentsDetailTable: FunctionComponent = () => {
     'Actions',
   ] as const;
 
+  const statusBadge = (
+    <span className="inline-flex rounded-full bg-mistyrose px-2.5 py-1 font-inter text-xs font-medium leading-4 text-firebrick">
+      Unpaid
+    </span>
+  );
+
   return (
     <div className="flex w-full flex-col overflow-hidden rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white font-inter">
-      <div className="box-border flex w-full flex-col gap-6 px-6 pb-6 pt-6 text-left font-inter text-num-14 text-slategray-100">
-        <div className="flex h-9 w-full flex-row items-center gap-2 sm:gap-3">
-          <div className="relative min-h-0 flex-1">
+      <div className="box-border flex w-full flex-col gap-6 px-4 pb-6 pt-6 text-left font-inter text-num-14 text-slategray-100 sm:px-6">
+        <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-center lg:gap-3">
+          <div className="relative min-h-0 min-w-0 flex-1">
             <Search
               className="pointer-events-none absolute left-[12px] top-1/2 h-4 w-4 -translate-y-1/2 text-[#717182]"
               strokeWidth={1.75}
@@ -62,7 +70,7 @@ const UnpaidStudentsDetailTable: FunctionComponent = () => {
               className="box-border h-9 w-full rounded-lg border-0 bg-whitesmoke py-1 pl-9 pr-3 font-inter text-sm font-normal leading-5 text-[#0a0a0a] placeholder:text-slategray-100 outline-none focus:ring-2 focus:ring-[rgba(0,0,0,0.08)] focus:ring-offset-0"
             />
           </div>
-          <div className="relative h-9 w-full shrink-0 sm:w-[180px]">
+          <div className="relative h-9 w-full shrink-0 lg:w-[180px]">
             <select
               value={classFilter}
               onChange={(e) => setClassFilter(e.target.value)}
@@ -83,7 +91,35 @@ const UnpaidStudentsDetailTable: FunctionComponent = () => {
           </div>
         </div>
 
-        <div className="w-full min-w-0 overflow-x-auto">
+        <div className="space-y-3 lg:hidden">
+          {rows.map((row: UnpaidStudentDetailRow) => (
+            <AdminMobileRowCard
+              key={row.id}
+              title={row.studentName}
+              badges={statusBadge}
+              fields={[
+                { label: 'Class', value: row.className },
+                { label: 'Amount due', value: <span className="tabular-nums">{mad(row.amountDue)}</span> },
+                {
+                  label: 'Amount paid',
+                  value: <span className="tabular-nums font-bold">{mad(row.amountPaid)}</span>
+                },
+                {
+                  label: 'Remaining',
+                  value: <span className="tabular-nums font-bold text-firebrick">{mad(row.remaining)}</span>
+                }
+              ]}
+              actions={
+                <button type="button" className={btnMobile(viewDetailsBtn)}>
+                  <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                  View Details
+                </button>
+              }
+            />
+          ))}
+        </div>
+
+        <div className="hidden w-full min-w-0 overflow-x-auto lg:block">
           <table className="w-full min-w-[860px] border-collapse text-[#0a0a0a]">
             <thead>
               <tr className={`h-10 ${borderRow}`}>
@@ -115,11 +151,7 @@ const UnpaidStudentsDetailTable: FunctionComponent = () => {
                     {mad(row.amountPaid)}
                   </td>
                   <td className={remainingClass}>{mad(row.remaining)}</td>
-                  <td className="h-[49px] px-2 align-middle md:px-4">
-                    <span className="inline-flex rounded-full bg-mistyrose px-2.5 py-1 font-inter text-xs font-medium leading-4 text-firebrick">
-                      Unpaid
-                    </span>
-                  </td>
+                  <td className="h-[49px] px-2 align-middle md:px-4">{statusBadge}</td>
                   <td className="h-[49px] pl-2 pr-0 align-middle text-right md:pl-4">
                     <div className="flex justify-end">
                       <button type="button" className={viewDetailsBtn}>

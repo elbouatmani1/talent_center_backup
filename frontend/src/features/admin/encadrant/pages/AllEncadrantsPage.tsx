@@ -10,8 +10,8 @@ const AllEncadrantsPage: FunctionComponent = () => {
 
   return (
     <AdminLayout>
-      <div className="-m-5 bg-gray-50 px-5 pb-8 pt-5 font-inter md:-m-6 md:px-6">
-        <div className="mx-auto max-w-[1600px] space-y-5 pb-6">
+      <div className="w-full bg-gray-50 px-3 pb-6 pt-3 font-inter sm:px-5 sm:pb-8 sm:pt-5 md:px-6">
+        <div className="mx-auto w-full min-w-0 max-w-[1600px] space-y-4 pb-4 sm:space-y-5 sm:pb-6">
           <EncadrantsSummaryGrid />
           <EncadrantsTablePanel rows={encadrantsMockRows} query={query} onQueryChange={setQuery} />
         </div>

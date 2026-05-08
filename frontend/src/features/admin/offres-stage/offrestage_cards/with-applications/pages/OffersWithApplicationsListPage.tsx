@@ -32,7 +32,7 @@ const OffersWithApplicationsListPage: FunctionComponent = () => {
 
   return (
     <AdminLayout>
-      <div className="mx-auto max-w-[1600px] space-y-5 pb-6 font-inter">
+      <div className="mx-auto w-full min-w-0 max-w-[1600px] space-y-5 pb-6 font-inter">
         <button
           type="button"
           onClick={() => navigate('/admin/internship-offers')}
@@ -41,7 +41,7 @@ const OffersWithApplicationsListPage: FunctionComponent = () => {
           <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
           <span className="leading-5 font-inter">Back to Dashboard</span>
         </button>
-        <div className="flex w-full flex-col rounded-[14px] border border-[rgba(0,0,0,0.1)] bg-white">
+        <div className="flex w-full min-w-0 flex-col rounded-[14px] border border-[rgba(0,0,0,0.1)] bg-white">
           <OffersWithApplicationsListCardHeader totalFormatted={totalFormatted} />
           <OffersWithApplicationsListSearchToolbar
             query={query}

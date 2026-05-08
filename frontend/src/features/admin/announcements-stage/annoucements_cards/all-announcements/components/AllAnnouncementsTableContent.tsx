@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Eye, Pencil, Users } from 'lucide-react';
 import type { AnnouncementRow, AnnouncementType } from '../../../types';
+import AdminMobileRowCard from '../../../../shared/AdminMobileRowCard';
 
 interface AllAnnouncementsTableContentProps {
   rows: AnnouncementRow[];
@@ -14,7 +15,10 @@ const typeClassName: Record<AnnouncementType, string> = {
 };
 
 const actionBtn =
-  'relative box-border flex h-8 shrink-0 cursor-pointer items-center justify-center rounded-num-8 border border-solid border-[rgba(0,0,0,0.1)] bg-white px-0 font-inter text-num-14 font-medium leading-num-20 text-[#0a0a0a] transition-colors hover:bg-whitesmoke';
+  'relative box-border flex h-8 shrink-0 cursor-pointer items-center justify-center gap-0 rounded-num-8 border border-solid border-[rgba(0,0,0,0.1)] bg-white px-0 font-inter text-num-14 font-medium leading-num-20 text-[#0a0a0a] transition-colors hover:bg-whitesmoke';
+
+const mobileActionBtn =
+  'inline-flex h-9 w-full items-center justify-center gap-2 rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white px-3 font-inter text-sm font-medium text-[#0a0a0a] transition-colors hover:bg-whitesmoke sm:w-auto';
 
 const AllAnnouncementsTableContent: FunctionComponent<AllAnnouncementsTableContentProps> = ({
   rows,
@@ -22,8 +26,68 @@ const AllAnnouncementsTableContent: FunctionComponent<AllAnnouncementsTableConte
   const navigate = useNavigate();
 
   return (
-    <div className="w-full shrink-0 overflow-hidden px-6 pb-6 pt-4 text-left font-inter text-num-14 leading-num-20 text-[#0a0a0a]">
-      <div className="w-full overflow-x-auto">
+    <div className="w-full shrink-0 overflow-hidden px-4 pb-6 pt-4 text-left font-inter text-num-14 leading-num-20 text-[#0a0a0a] sm:px-6">
+      <div className="space-y-3 lg:hidden">
+        {rows.length === 0 ? (
+          <p className="py-8 text-center text-sm text-slategray-100">No announcements match your filters.</p>
+        ) : (
+          rows.map((row) => (
+            <AdminMobileRowCard
+              key={row.id}
+              title={row.title}
+              badges={
+                <span
+                  className={`inline-flex h-[22px] items-center justify-center rounded-num-8 px-2 py-0.5 text-[12px] font-medium leading-4 ${typeClassName[row.type]}`}
+                >
+                  {row.type}
+                </span>
+              }
+              fields={[
+                {
+                  label: 'Audience',
+                  value: (
+                    <span className="inline-flex items-center gap-2">
+                      <Users className="h-4 w-4 shrink-0 text-slategray-100" strokeWidth={1.75} aria-hidden />
+                      {row.targetAudience}
+                    </span>
+                  )
+                },
+                {
+                  label: 'Date',
+                  value: (
+                    <span className="inline-flex items-center gap-2">
+                      <Calendar className="h-4 w-4 shrink-0 text-slategray-100" strokeWidth={1.75} aria-hidden />
+                      {row.date}
+                    </span>
+                  )
+                }
+              ]}
+              actions={
+                <>
+                  <button
+                    type="button"
+                    className={mobileActionBtn}
+                    onClick={() => navigate(`/admin/announcements/${row.id}`)}
+                  >
+                    <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                    View
+                  </button>
+                  <button
+                    type="button"
+                    className={mobileActionBtn}
+                    onClick={() => navigate(`/admin/announcements/${row.id}/edit`)}
+                  >
+                    <Pencil className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                    Edit
+                  </button>
+                </>
+              }
+            />
+          ))
+        )}
+      </div>
+
+      <div className="hidden w-full overflow-x-auto lg:block">
         <table className="w-full min-w-[880px] table-fixed border-collapse">
           <colgroup>
             <col className="w-[39%]" />

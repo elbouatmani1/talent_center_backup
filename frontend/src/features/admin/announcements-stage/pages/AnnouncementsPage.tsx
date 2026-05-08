@@ -78,7 +78,7 @@ const AnnouncementsPage: FunctionComponent = () => {
 
   return (
     <AdminLayout>
-      <div className="mx-auto max-w-[1600px] space-y-5 font-inter">
+      <div className="mx-auto w-full min-w-0 max-w-[1600px] space-y-4 pb-4 font-inter sm:space-y-5 sm:pb-5">
         <AnnouncementsStats onStatCardClick={handleStatCardClick} />
         <div ref={tableSectionRef} id="announcements-table">
           <AnnouncementsTable

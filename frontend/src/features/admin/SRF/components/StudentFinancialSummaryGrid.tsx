@@ -8,8 +8,8 @@ const StudentFinancialSummaryGrid: FunctionComponent = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative w-full overflow-x-auto text-left font-inter text-num-14 text-slategray-100">
-      <div className="grid w-full max-w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:w-max lg:grid-cols-[repeat(4,299.3px)] lg:gap-x-[15.95px] lg:gap-y-4 lg:content-start">
+    <div className="relative w-full min-w-0 text-left font-inter text-num-14 text-slategray-100">
+      <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-x-4 lg:gap-y-4 lg:content-start">
         {studentFinancialSummaryStats.map((stat) => (
           <SRFSummaryStatCard
             key={stat.label}

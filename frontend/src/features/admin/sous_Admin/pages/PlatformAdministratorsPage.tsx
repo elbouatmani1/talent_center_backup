@@ -23,7 +23,7 @@ const PlatformAdministratorsPage: FunctionComponent = () => {
 
   return (
     <AdminLayout>
-      <div className="mx-auto max-w-[1600px] space-y-5 px-0 pb-8 pt-0 font-inter md:px-0">
+      <div className="mx-auto w-full min-w-0 max-w-[1600px] space-y-4 px-0 pb-6 pt-0 font-inter sm:space-y-5 sm:pb-8 md:px-0">
         <PlatformAdministratorsKpiSection />
 
         <div className="box-border flex w-full min-w-0 flex-col gap-6 rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left text-base text-[#0a0a0a] shadow-sm">

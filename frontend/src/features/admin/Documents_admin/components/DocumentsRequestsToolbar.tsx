@@ -27,8 +27,8 @@ const DocumentsRequestsToolbar: FunctionComponent<DocumentsRequestsToolbarProps>
   const label = documentTypeFilter === 'all' ? 'All types' : documentTypeFilter;
 
   return (
-    <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:flex-nowrap sm:items-center">
-      <div className="relative min-h-9 min-w-0 flex-1 sm:min-w-[10rem]">
+    <div className="flex w-full min-w-0 flex-col gap-3 lg:flex-row lg:flex-nowrap lg:items-center">
+      <div className="relative min-h-9 min-w-0 flex-1 lg:min-w-[10rem]">
         <Search
           className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slategray-100"
           strokeWidth={1.75}
@@ -46,7 +46,7 @@ const DocumentsRequestsToolbar: FunctionComponent<DocumentsRequestsToolbarProps>
 
       <details
         ref={detailsRef}
-        className="group relative w-full min-w-0 shrink-0 sm:w-auto sm:min-w-[11rem]"
+        className="group relative w-full min-w-0 shrink-0 lg:w-auto lg:min-w-[11rem]"
       >
         <summary
           className="flex h-9 min-h-9 cursor-pointer list-none items-center justify-between gap-3 rounded-lg border border-solid border-[#e0e0e0] bg-white px-3 font-inter text-num-14 font-medium leading-5 text-[#0a0a0a] transition-colors hover:bg-[#fafafa] [&::-webkit-details-marker]:hidden"

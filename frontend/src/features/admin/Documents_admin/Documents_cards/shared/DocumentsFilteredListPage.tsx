@@ -41,7 +41,7 @@ const DocumentsFilteredListPage: FunctionComponent<DocumentsFilteredListPageProp
 
   return (
     <AdminLayout>
-      <div className="mx-auto max-w-[1600px] space-y-5 pb-6 font-inter">
+      <div className="mx-auto w-full min-w-0 max-w-[1600px] space-y-5 pb-6 font-inter">
         <button
           type="button"
           onClick={() => navigate('/admin/documents')}

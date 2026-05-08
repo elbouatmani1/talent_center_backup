@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import type { ActiveOfferRow } from '../data/activeOffersMockData';
+import AdminMobileRowCard from '../../../../shared/AdminMobileRowCard';
 
 interface ActiveOffersCardContentProps {
   offers: ActiveOfferRow[];
@@ -7,8 +8,26 @@ interface ActiveOffersCardContentProps {
 
 const ActiveOffersCardContent: FunctionComponent<ActiveOffersCardContentProps> = ({ offers }) => {
   return (
-    <div className="w-full px-6 pb-6 font-inter text-left text-sm text-[#0a0a0a]">
-      <div className="overflow-x-auto">
+    <div className="w-full px-4 pb-6 font-inter text-left text-sm text-[#0a0a0a] sm:px-6">
+      <div className="space-y-3 lg:hidden">
+        {offers.map((offer, index) => (
+          <AdminMobileRowCard
+            key={`${offer.title}-${offer.company}-${index}`}
+            title={offer.title}
+            badges={
+              <span className="inline-flex items-center justify-center rounded-lg bg-honeydew px-2 py-0.5 text-xs font-medium leading-4 text-seagreen">
+                {offer.status}
+              </span>
+            }
+            fields={[
+              { label: 'Company', value: offer.company },
+              { label: 'Applicants', value: <span className="tabular-nums">{offer.applicants}</span> }
+            ]}
+          />
+        ))}
+      </div>
+
+      <div className="hidden overflow-x-auto lg:block">
         <table className="w-full min-w-[560px] border-collapse">
           <thead>
             <tr className="border-b border-[rgba(0,0,0,0.1)]">

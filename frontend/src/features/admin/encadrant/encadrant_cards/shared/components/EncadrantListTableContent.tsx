@@ -1,6 +1,7 @@
 import { FunctionComponent, MouseEvent } from 'react';
 import { Eye, FileText, Users, UserPlus } from 'lucide-react';
 import type { EncadrantRow } from '../../../data/encadrantsMockData';
+import AdminMobileRowCard from '../../../../shared/AdminMobileRowCard';
 
 interface EncadrantListTableContentProps {
   rows: EncadrantRow[];
@@ -12,12 +13,60 @@ const viewDetailsBtnClass =
 const manageStudentsBtnClass =
   'inline-flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-num-8 bg-[#030213] px-2.5 font-inter text-num-14 font-medium leading-5 text-white transition-opacity hover:opacity-90';
 
+const btnMobile = (c: string) => `${c} w-full justify-center sm:w-auto`;
+
 const EncadrantListTableContent: FunctionComponent<EncadrantListTableContentProps> = ({ rows }) => {
   const stopBtn = (e: MouseEvent) => e.stopPropagation();
 
   return (
-    <div className="w-full px-6 pb-6 pt-4 font-inter text-left text-num-14 leading-5 text-[#101828]">
-      <div className="overflow-x-auto">
+    <div className="w-full px-4 pb-6 pt-4 font-inter text-left text-num-14 leading-5 text-[#101828] sm:px-6">
+      <div className="space-y-3 lg:hidden">
+        {rows.length === 0 ? (
+          <p className="py-8 text-center text-sm text-slategray-100">No encadrants match your filters.</p>
+        ) : (
+          rows.map((row, index) => (
+            <AdminMobileRowCard
+              key={`${row.name}-${index}`}
+              title={row.name}
+              fields={[
+                { label: 'Department', value: row.department },
+                {
+                  label: 'Students assigned',
+                  value: (
+                    <span className="inline-flex items-center gap-1.5">
+                      <Users className="h-4 w-4 shrink-0 text-slategray-100" strokeWidth={1.75} aria-hidden />
+                      {row.studentsAssigned}
+                    </span>
+                  )
+                },
+                {
+                  label: 'Reports in progress',
+                  value: (
+                    <span className="inline-flex items-center gap-1.5">
+                      <FileText className="h-4 w-4 shrink-0 text-slategray-100" strokeWidth={1.75} aria-hidden />
+                      {row.reportsInProgress}
+                    </span>
+                  )
+                }
+              ]}
+              actions={
+                <div className="flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap" onClick={stopBtn}>
+                  <button type="button" className={btnMobile(viewDetailsBtnClass)}>
+                    <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                    <span>View Details</span>
+                  </button>
+                  <button type="button" className={btnMobile(manageStudentsBtnClass)}>
+                    <UserPlus className="h-4 w-4 shrink-0" strokeWidth={2} aria-hidden />
+                    <span>Manage Students</span>
+                  </button>
+                </div>
+              }
+            />
+          ))
+        )}
+      </div>
+
+      <div className="hidden overflow-x-auto lg:block">
         <table className="w-full min-w-[800px] border-collapse">
           <thead>
             <tr className="border-b border-[rgba(0,0,0,0.1)]">

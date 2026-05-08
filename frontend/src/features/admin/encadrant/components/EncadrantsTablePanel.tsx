@@ -2,6 +2,7 @@ import { FunctionComponent, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, Plus, Search, UserPlus, FileText, Users } from 'lucide-react';
 import type { EncadrantRow } from '../data/encadrantsMockData';
+import AdminMobileRowCard from '../../shared/AdminMobileRowCard';
 
 /** Styles boutons alignés Figma (rounded-num-8, h-8, border rgba comme gray-300 maquette). */
 const viewDetailsBtnClass =
@@ -9,6 +10,8 @@ const viewDetailsBtnClass =
 
 const manageStudentsBtnClass =
   'inline-flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-num-8 bg-[#030213] px-2.5 font-inter text-num-14 font-medium leading-5 text-white transition-opacity hover:opacity-90';
+
+const btnMobile = (c: string) => `${c} w-full justify-center sm:w-auto`;
 
 const TABLE_HEADINGS = [
   'Name',
@@ -54,7 +57,7 @@ const EncadrantsTablePanel: FunctionComponent<EncadrantsTablePanelProps> = ({
   }, [rows, query, departmentFilter]);
 
   return (
-    <div className="box-border flex w-full flex-col rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left font-inter shadow-sm">
+    <div className="box-border flex w-full min-w-0 flex-col rounded-[14px] border border-solid border-[rgba(0,0,0,0.1)] bg-white text-left font-inter shadow-sm">
       <div className="flex flex-col gap-5 px-4 pb-1.5 pt-6 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
         <div className="flex min-w-0 flex-col gap-0">
           <h2 className="m-0 font-inter text-xl font-bold leading-7 tracking-tight text-[#0a0a0a]">Encadrants</h2>
@@ -62,8 +65,8 @@ const EncadrantsTablePanel: FunctionComponent<EncadrantsTablePanelProps> = ({
             Manage supervisors and their assigned students
           </p>
         </div>
-        <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-end lg:max-w-xl">
-          <div className="relative flex flex-1 min-w-[12rem]">
+        <div className="flex w-full min-w-0 flex-col gap-3 lg:flex-row lg:items-center lg:justify-end lg:max-w-xl">
+          <div className="relative min-w-0 w-full flex-1 lg:min-w-[12rem]">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#717182]" strokeWidth={1.75} />
             <input
               type="search"
@@ -77,7 +80,7 @@ const EncadrantsTablePanel: FunctionComponent<EncadrantsTablePanelProps> = ({
             aria-label="Filter by department"
             value={departmentFilter}
             onChange={(e) => setDepartmentFilter(e.target.value)}
-            className="box-border h-10 min-w-[11rem] shrink-0 cursor-pointer appearance-none rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white py-2 pl-3 pr-9 font-inter text-sm font-medium leading-5 text-[#0a0a0a] bg-[length:1rem] bg-[right_0.625rem_center] bg-no-repeat"
+            className="box-border h-10 w-full min-w-0 shrink-0 cursor-pointer appearance-none rounded-lg border border-solid border-[rgba(0,0,0,0.1)] bg-white py-2 pl-3 pr-9 font-inter text-sm font-medium leading-5 text-[#0a0a0a] bg-[length:1rem] bg-[right_0.625rem_center] bg-no-repeat lg:w-auto lg:min-w-[11rem]"
             style={{ backgroundImage: chevronSvg }}
           >
             <option value="all">All departments</option>
@@ -90,7 +93,7 @@ const EncadrantsTablePanel: FunctionComponent<EncadrantsTablePanelProps> = ({
           <button
             type="button"
             onClick={() => navigate('/admin/encadrants/new')}
-            className="inline-flex h-10 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#030213] px-4 font-inter text-sm font-medium text-white transition-opacity hover:opacity-90"
+            className="inline-flex h-10 w-full min-w-0 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#030213] px-4 font-inter text-sm font-medium text-white transition-opacity hover:opacity-90 lg:w-auto"
           >
             <Plus className="h-4 w-4 shrink-0" strokeWidth={2} aria-hidden />
             Add Encadrant
@@ -98,8 +101,49 @@ const EncadrantsTablePanel: FunctionComponent<EncadrantsTablePanelProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto px-4 pb-6 pt-0 sm:px-6">
-        {/* Tableau calé sur export Figma CardContent (hauteur ligne ~49px, bordures gray-300 → rgba(0,0,0,0.1)) */}
+      <div className="space-y-3 px-4 pb-6 pt-0 sm:px-6 lg:hidden">
+        {filteredRows.map((row, index) => (
+          <AdminMobileRowCard
+            key={`${row.name}-${index}`}
+            title={row.name}
+            fields={[
+              { label: 'Department', value: row.department },
+              {
+                label: 'Students assigned',
+                value: (
+                  <span className="inline-flex items-center gap-2 tabular-nums">
+                    <Users className="h-4 w-4 shrink-0 text-[#0a0a0a]" strokeWidth={1.75} aria-hidden />
+                    {row.studentsAssigned}
+                  </span>
+                )
+              },
+              {
+                label: 'Reports in progress',
+                value: (
+                  <span className="inline-flex items-center gap-2 tabular-nums">
+                    <FileText className="h-4 w-4 shrink-0 text-[#0a0a0a]" strokeWidth={1.75} aria-hidden />
+                    {row.reportsInProgress}
+                  </span>
+                )
+              }
+            ]}
+            actions={
+              <>
+                <button type="button" className={btnMobile(viewDetailsBtnClass)}>
+                  <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
+                  View Details
+                </button>
+                <button type="button" className={btnMobile(manageStudentsBtnClass)}>
+                  <UserPlus className="h-4 w-4 shrink-0" strokeWidth={2} aria-hidden />
+                  Manage Students
+                </button>
+              </>
+            }
+          />
+        ))}
+      </div>
+
+      <div className="hidden overflow-x-auto px-4 pb-6 pt-0 min-w-0 sm:px-6 lg:block">
         <div className="box-border w-full text-left font-inter text-num-14 leading-5 text-[#0a0a0a]">
           <div className="relative min-h-[284px] w-full min-w-[1195px] overflow-hidden">
             <table className="w-full min-w-[1195px] border-collapse font-inter">

@@ -5,8 +5,8 @@ import EncadrantReportsTableSection from '../components/EncadrantReportsTableSec
 
 const EncadrantReportsPage: FunctionComponent = () => (
   <AdminLayout>
-    <div className="-m-5 bg-gray-50 px-5 pb-8 pt-5 font-inter md:-m-6 md:px-6">
-      <div className="mx-auto flex min-h-0 w-full max-w-[1600px] flex-col space-y-5 pb-6">
+    <div className="w-full bg-gray-50 px-3 pb-6 pt-3 font-inter sm:px-5 sm:pb-8 sm:pt-5 md:px-6">
+      <div className="mx-auto flex min-h-0 w-full min-w-0 max-w-[1600px] flex-col space-y-5 pb-6">
         <EncadrantReportsStatGrid />
         <EncadrantReportsTableSection />
       </div>
