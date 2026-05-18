@@ -91,7 +91,36 @@ import TasksHistoryCardPage from '../../features/admin/main_history/History_card
 import MeetingsHistoryCardPage from '../../features/admin/main_history/History_card/Meetings_card/pages/MeetingsHistoryCardPage';
 
 // Student Pages
-import StudentDashboardPage from '../../features/student/pages/StudentDashboardPage';
+import StudentDashboardPage from '../../features/student/Dashboard/pages/StudentDashboardPage';
+import StudentInternshipOffersPage from '../../features/student/internship_offers/pages/StudentInternshipOffersPage';
+import AllInternshipOffersPage from '../../features/student/internship_offers/pages/AllInternshipOffersPage';
+import InternshipOfferDetailsPage from '../../features/student/internship_offers/pages/InternshipOfferDetailsPage';
+import ApplyToInternshipPage from '../../features/student/internship_offers/pages/ApplyToInternshipPage';
+import CvAnalysisPage from '../../features/student/internship_offers/pages/CvAnalysisPage';
+import { CvAnalysisToolPage } from '../../features/student/internship_offers/CV_Analyse';
+import { InterviewSimulatorPage } from '../../features/student/internship_offers/interview_Simulator';
+import { ChatPage } from '../../features/student/internship_offers/chat';
+import { HistoryPage } from '../../features/student/internship_offers/history';
+import {
+  AllAnnouncementsPage,
+  AnnouncementsChatPage as StudentAnnouncementsChatPage,
+  AnnouncementsHistoryPage as StudentAnnouncementsHistoryPage,
+  AnnouncementsPage as StudentAnnouncementsPage,
+} from '../../features/student/Annoucements';
+import { MainHistoryPage as StudentMainHistoryPage } from '../../features/student/main_history';
+import {
+  DocumentsChatPage as StudentDocumentsChatPage,
+  DocumentsPage as StudentDocumentsPage,
+} from '../../features/student/Documents';
+import {
+  EncadrantAgendaPage as StudentEncadrantAgendaPage,
+  EncadrantChatPage as StudentEncadrantChatPage,
+  EncadrantPage as StudentEncadrantPage,
+  EncadrantReportPage as StudentEncadrantReportPage,
+  EncadrantTaskPage as StudentEncadrantTaskPage,
+  EncadrantWorkspacePage as StudentEncadrantWorkspacePage,
+} from '../../features/student/Encadrant';
+import { SrfChatPage as StudentSrfChatPage, SrfPage as StudentSrfPage } from '../../features/student/SRF';
 
 // CV Pages
 import CVListPage from '../../features/cv/pages/CVListPage';
@@ -166,6 +195,102 @@ export const router = createBrowserRouter([
       {
         path: '/student-dashboard',
         element: <StudentDashboardPage />
+      },
+      {
+        path: '/student/announcements',
+        element: <StudentAnnouncementsPage />
+      },
+      {
+        path: '/student/announcements/all',
+        element: <AllAnnouncementsPage />
+      },
+      {
+        path: '/student/announcements/chat',
+        element: <StudentAnnouncementsChatPage />
+      },
+      {
+        path: '/student/announcements/history',
+        element: <StudentAnnouncementsHistoryPage />
+      },
+      {
+        path: '/student/main-history',
+        element: <StudentMainHistoryPage />
+      },
+      {
+        path: '/student/documents',
+        element: <StudentDocumentsPage />
+      },
+      {
+        path: '/student/documents/chat',
+        element: <StudentDocumentsChatPage />
+      },
+      {
+        path: '/student/srf',
+        element: <StudentSrfPage />
+      },
+      {
+        path: '/student/srf/chat',
+        element: <StudentSrfChatPage />
+      },
+      {
+        path: '/student/encadrant',
+        element: <StudentEncadrantPage />
+      },
+      {
+        path: '/student/encadrant/chat',
+        element: <StudentEncadrantChatPage />
+      },
+      {
+        path: '/student/encadrant/agenda',
+        element: <StudentEncadrantAgendaPage />
+      },
+      {
+        path: '/student/encadrant/task',
+        element: <StudentEncadrantTaskPage />
+      },
+      {
+        path: '/student/encadrant/workspace',
+        element: <StudentEncadrantWorkspacePage />
+      },
+      {
+        path: '/student/encadrant/report',
+        element: <StudentEncadrantReportPage />
+      },
+      {
+        path: '/student/internship-offers',
+        element: <StudentInternshipOffersPage />
+      },
+      {
+        path: '/student/internship-offers/all',
+        element: <AllInternshipOffersPage />
+      },
+      {
+        path: '/student/internship-offers/cv-analysis-tool',
+        element: <CvAnalysisToolPage />
+      },
+      {
+        path: '/student/internship-offers/interview-simulator',
+        element: <InterviewSimulatorPage />
+      },
+      {
+        path: '/student/internship-offers/chat',
+        element: <ChatPage />
+      },
+      {
+        path: '/student/internship-offers/history',
+        element: <HistoryPage />
+      },
+      {
+        path: '/student/internship-offers/:offerId/apply',
+        element: <ApplyToInternshipPage />
+      },
+      {
+        path: '/student/internship-offers/:offerId/cv-analysis',
+        element: <CvAnalysisPage />
+      },
+      {
+        path: '/student/internship-offers/:offerId',
+        element: <InternshipOfferDetailsPage />
       },
       {
         path: '/admin-dashboard',
